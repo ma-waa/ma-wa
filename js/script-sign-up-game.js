@@ -12,7 +12,8 @@ const form = document.getElementById("signup-form")
  // ------------------------------
  
  initialForm.addEventListener("submit", async (event) => {
- 
+  event.preventDefault();
+
    const name = initialForm.name.value;
    const phone_id = initialForm.phone.value;
    const universityName = initialForm.universityName.value;
