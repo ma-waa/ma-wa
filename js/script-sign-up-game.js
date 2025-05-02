@@ -117,7 +117,7 @@ const characters = {
 
 // Character images
 const characterImages = {
-  A: "images/owl.jpg", // Owl
+  A: "images/owl.png", // Owl
   B: "images/dolphin.jpg", // Dolphin
   C: "images/turtle.jpg", // Turtle
   D: "images/lion.jpg", // Lion
