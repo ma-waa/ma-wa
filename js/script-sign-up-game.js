@@ -5,14 +5,13 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
  // احتفظ به سريًا
  
  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
- 
+ const initialForm = document.getElementById("initial-form");
+const form = document.getElementById("signup-form")
  // ------------------------------
  // معالجة نموذج البيانات الأولية
  // ------------------------------
- const initialForm = document.getElementById("initial-form");
  
  initialForm.addEventListener("submit", async (event) => {
-   event.preventDefault();
  
    const name = initialForm.name.value;
    const phone_id = initialForm.phone.value;
@@ -366,24 +365,41 @@ function updateNextButton() {
 }
 
 // Event listeners for initial form
-document
-  .getElementById("initial-form")
-  .addEventListener("submit", function (event) {
-    // Store initial form data
-    initialFormData = {
-      universityName: document.getElementById("universityName").value,
-      facultyname: document.getElementById("facultyname").value,
-      gender: document.getElementById("gender").value,
-      religion: document.getElementById("religion").value,
-      gpa: document.getElementById("gpa").value,
-      level: document.getElementById("level").value,
-    };
+initialForm.addEventListener("submit", function (event) {
+  // Store initial form data
+  initialFormData = {
+    universityName: document.getElementById("universityName").value,
+    facultyname: document.getElementById("facultyname").value,
+    gender: document.getElementById("gender").value,
+    religion: document.getElementById("religion").value,
+    gpa: document.getElementById("gpa").value,
+    level: document.getElementById("level").value,
+  };
 
-    // Hide initial form and show quiz
+  let phoneValid = this.phone.value.length >= 10;
+  let gpaValue = parseFloat(this.gpa.value);
+  let gpaValid = gpaValue >= 1 && gpaValue <= 4;
+
+  if (!phoneValid) {
+    window.scrollTo(0, 100);
+    window.alert("رقم الهاتف غير صحيح ");
+  }
+
+  if (!gpaValid) {
+    window.scrollTo(0, 100);
+    window.alert("رقم ال gpa غير صحيح");
+  }
+
+  if (phoneValid && gpaValid) {
+    // All validations passed
     initialFormContainer.style.display = "none";
     quizContainer.style.display = "block";
     document.querySelector(".navigation").style.display = "flex";
-  });
+  } else {
+    // Prevent form submission if validation fails
+    event.preventDefault();
+  }
+});
 
 // Event listeners for quiz navigation
 nextBtn.addEventListener("click", () => {
@@ -419,33 +435,24 @@ prevBtn.addEventListener("click", () => {
 // });
 
 // Sign-up form validation
-document
-  .getElementById("signup-form")
-  .addEventListener("submit", function (event) {
-    // event.preventDefault();
+form.addEventListener("submit", function (event) {
+  let password = document.getElementById("password").value;
+  let confirmPassword = document.getElementById("confirm-password").value;
+  let valid = false;
 
-    let password = document.getElementById("password").value;
-    let confirmPassword = document.getElementById("confirm-password").value;
-    let message = document.getElementById("password-msg");
-    let validPassword = false;
-
-    if (password !== "" && password === confirmPassword) {
-      validPassword = true;
-    } else {
-      window.scrollTo(0, 200);
-      message.textContent = "كلمات المرور غير متطابقة";
-      message.style.color = "white";
-      message.style.backgroundColor = "red";
-      message.style.padding = "5px";
-      message.style.borderRadius = "4px";
-      return;
-    }
-
-    if (validPassword) {
-      // Form is valid, show results
-      showResults();
-    }
-  });
+  // check if the password correct
+  if (password !== "" && password === confirmPassword) {
+    valid = true;
+  } else {
+    window.scrollTo(0, 200);
+    window.alert("كلمات المرور غير متطابقة.");
+    return;
+  }
+  if (valid) {
+    // Form is valid, show results
+    showResults();
+  }
+});
 
 // Results calculation
 function calculateResults() {
