@@ -39,36 +39,14 @@ closeBtn.addEventListener("click", function () {
   contentConatiner.classList.remove("none");
 });
 
-// buttons to scroll to different sections of the page
-scrollButtons.forEach((button, index) => {
-  button.onclick = function () {
-    let scrollY = 0;
-
-    switch (index) {
-      // about us
-      case 0:
-        scrollY = 800;
-        break;
-      // features
-      case 1:
-        scrollY = 1500;
-        break;
-      // application
-      case 2:
-        scrollY = 3200;
-        break;
-      // contact us
-      case 3:
-        scrollY = document.body.scrollHeight; // scroll to bottom
-        break;
-    }
-    window.scrollTo({
-      top: scrollY,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
-});
+// function called in html pass the value of scrollY i need to scroll to it
+function scrollToPosition(s) {
+  window.scrollTo({
+    top: s,
+    left: 0,
+    behavior: "smooth",
+  });
+}
 
 // scroll to top button show/hide
 window.addEventListener("scroll" , function(){
